@@ -19,12 +19,12 @@ class SPECIES_CPP_API UAgentInfoWidget : public UUserWidget
 
 public:
 
-	UFUNCTION(BlueprintCallable)
-	float getLifePercentage();
+	UFUNCTION(BlueprintImplementableEvent)
+	void getLifePercentage(float value);
 	
-	UFUNCTION(BlueprintCallable)
-	float getEnrgyPercentage();
+	UFUNCTION(BlueprintImplementableEvent)
+	void getEnergyPercentage(float value);
 
-	UFUNCTION(BlueprintCallable)
-	float getHungerPercentage();
+	UFUNCTION(BlueprintImplementableEvent)
+	void getHungerPercentage(float value);
 };

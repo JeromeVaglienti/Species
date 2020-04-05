@@ -26,6 +26,11 @@ protected:
 
 	void HandleChangingCameraMode();
 
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+
+	void ResetLeftClick();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -10,6 +10,9 @@
 #include "Components/PrimitiveComponent.h"
 #include "AI_Character_0.generated.h"
 
+
+class UAgentInfoWidget;
+
 UCLASS()
 class SPECIES_CPP_API AAI_Character_0 : public ACharacter
 {
@@ -61,9 +64,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	UWidgetComponent* widgetComponent;
 
+	UAgentInfoWidget* widgetInfoDisplay;
+
 private:
 	//Species Statistics
 	Species_Data* m_data;
+
+	bool bIsClicked;
 
 	//MetabolicPointer
 	typedef void(AAI_Character_0::*MetabolicSignature)(float dt);

@@ -11,6 +11,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "GameMode/AIGameMode.h"
+#include "GameMode/AgentInfoWidget.h"
 
 // Sets default values
 AAI_Character_0::AAI_Character_0()
@@ -29,8 +30,6 @@ AAI_Character_0::AAI_Character_0()
 
 	widgetComponent->SetupAttachment(RootComponent);
 
-	GetCapsuleComponent()->OnClicked.AddDynamic(this, &AAI_Character_0::ClickedEventHandle);
-
 }
 
 // Called when the game starts or when spawned
@@ -38,7 +37,11 @@ void AAI_Character_0::BeginPlay()
 {
 	Super::BeginPlay();
 	widgetComponent->InitWidget();
+	widgetInfoDisplay = Cast<UAgentInfoWidget>(widgetComponent->GetUserWidgetObject());
+
 	widgetComponent->SetVisibility(false, false);
+	GetCapsuleComponent()->OnClicked.AddDynamic(this, &AAI_Character_0::ClickedEventHandle);
+	bIsClicked = false;
 
 }
 
@@ -50,6 +53,13 @@ void AAI_Character_0::Tick(float DeltaTime)
 	(this->*(metabolicSignature[m_data->currentState]))(DeltaTime);
 
 	MetabolicConstant(DeltaTime);
+
+	if (bIsClicked)
+	{
+		widgetInfoDisplay->getLifePercentage( *m_data->m_piLife /(float) m_data->GetMaxLifePossible());
+		widgetInfoDisplay->getEnergyPercentage( *m_data->m_piEnergy /(float) m_data->GetMaxEnergyPossible());
+		widgetInfoDisplay->getHungerPercentage( *m_data->m_piHunger /(float) m_data->GetMaxHungerPossible());
+	}
 }
 
 // Called to bind functionality to input
@@ -62,6 +72,7 @@ void AAI_Character_0::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 void AAI_Character_0::ClickedEventHandle(UPrimitiveComponent* TouchedComponent, FKey ButtonPressed)
 {
 	widgetComponent->SetVisibility(true, false);
+	bIsClicked = true;
 }
 
 void AAI_Character_0::GetDataToBlackBoard(UBlackboardComponent * _pbbData)

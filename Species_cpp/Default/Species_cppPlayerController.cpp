@@ -10,5 +10,4 @@
 ASpecies_cppPlayerController::ASpecies_cppPlayerController()
 {
 	bShowMouseCursor = false;
-	ClickEventKeys.Remove(EKeys::LeftMouseButton);
 }
